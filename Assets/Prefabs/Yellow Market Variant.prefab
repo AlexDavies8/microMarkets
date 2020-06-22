@@ -76,7 +76,7 @@ PrefabInstance:
     - target: {fileID: 7751856196049897668, guid: 4ed7c487cf345154d84be6c4db5893f2,
         type: 3}
       propertyPath: m_Name
-      value: Yellow Market
+      value: Yellow Market Variant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ed7c487cf345154d84be6c4db5893f2, type: 3}

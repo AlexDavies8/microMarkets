@@ -1,43 +1,45 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 public class SpriteEventSystem : MonoBehaviour
 {
     [SerializeField] private Camera _camera = null;
     [SerializeField] private LayerMask _eventLayers = 0;
 
-    Collider2D _underMouse;
+    SpriteEventTrigger _underMouse;
 
     private void Update()
     {
         Vector2 mousePosition = _camera.ScreenToWorldPoint(Input.mousePosition);
-        var underMouse = Physics2D.OverlapPoint(mousePosition, _eventLayers.value);
+        var allUnderMouse = Physics2D.OverlapPointAll(mousePosition, _eventLayers.value);
+
+        var underMouse = allUnderMouse.Select(x => x.GetComponent<SpriteEventTrigger>()).OrderBy(x => -x.Priority).FirstOrDefault();
 
         if (underMouse == null)
         {
-            _underMouse?.GetComponent<SpriteEventTrigger>().MouseExit(mousePosition);
+            _underMouse?.MouseExit(mousePosition);
             _underMouse = null;
             return;
         }
 
-        var eventTrigger = underMouse.GetComponent<SpriteEventTrigger>();
-        if (!eventTrigger) return;
+        if (!underMouse) return;
 
-        eventTrigger.MouseStay(mousePosition);
+        underMouse.MouseStay(mousePosition);
 
         if (_underMouse != underMouse)
         {
-            eventTrigger.MouseEnter(mousePosition);
+            underMouse.MouseEnter(mousePosition);
             _underMouse = underMouse;
         }
 
         if (Input.GetMouseButtonDown(0))
         {
-            eventTrigger.MouseDown(mousePosition);
+            underMouse.MouseDown(mousePosition);
         }
 
         if (Input.GetMouseButtonUp(0))
         {
-            eventTrigger.MouseUp(mousePosition);
+            underMouse.MouseUp(mousePosition);
         }
     }
 }

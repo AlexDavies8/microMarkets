@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 1169159408361292650, guid: b0d517e204b41e94d839eef96a3b0f91,
         type: 3}
       propertyPath: m_Name
-      value: Purple Market
+      value: Purple Market Variant
       objectReference: {fileID: 0}
     - target: {fileID: 1169159408361292652, guid: b0d517e204b41e94d839eef96a3b0f91,
         type: 3}

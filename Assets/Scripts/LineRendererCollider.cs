@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 public class LineRendererCollider : MonoBehaviour
 {
@@ -13,10 +14,8 @@ public class LineRendererCollider : MonoBehaviour
 
     private void Update()
     {
-        _edgeCollider.points = new Vector2[_lineRenderer.positionCount];
-        for (int i = 0; i < _lineRenderer.positionCount; i++)
-        {
-            _edgeCollider.points[i] = _lineRenderer.GetPosition(i);
-        }
+        Vector3[] positions = new Vector3[_lineRenderer.positionCount];
+        _lineRenderer.GetPositions(positions);
+        _edgeCollider.SetPoints(positions.Select(x => (Vector2)x).ToList());
     }
 }

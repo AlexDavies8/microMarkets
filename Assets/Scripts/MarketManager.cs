@@ -3,10 +3,13 @@ using UnityEngine;
 
 public class MarketManager : MonoBehaviour
 {
-    [SerializeField] private GameObject _redMarketPrefab;
-    [SerializeField] private GameObject _cyanMarketPrefab;
-    [SerializeField] private GameObject _yellowMarketPrefab;
-    [SerializeField] private GameObject _purpleMarketPrefab;
+    [SerializeField] private RouteManager _routeManager = null;
+    [SerializeField] private MarketController _marketController = null;
+
+    [SerializeField] private GameObject _redMarketPrefab = null;
+    [SerializeField] private GameObject _cyanMarketPrefab = null;
+    [SerializeField] private GameObject _yellowMarketPrefab = null;
+    [SerializeField] private GameObject _purpleMarketPrefab = null;
 
     List<Market> _markets = new List<Market>();
 
@@ -14,7 +17,7 @@ public class MarketManager : MonoBehaviour
     {
         foreach (var market in _markets)
         {
-            market.Tick(Time.deltaTime);
+            market.Tick(TimeController.DeltaTime);
         }
     }
 
@@ -33,6 +36,10 @@ public class MarketManager : MonoBehaviour
         marketTransform.position = position;
         marketTransform.SetParent(transform);
         var market = marketGO.GetComponent<Market>();
+        market._marketController = _marketController;
         _markets.Add(market);
+        var eventTrigger = marketGO.GetComponent<SpriteEventTrigger>();
+        eventTrigger.OnMouseDown.AddListener(mousePosition => _routeManager.CreateRoute(market));
+        eventTrigger.OnMouseEnter.AddListener(mousePosition => _routeManager.SelectMarket(market));
     }
 }

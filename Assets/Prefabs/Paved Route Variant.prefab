@@ -12,10 +12,30 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: d9641da0901417042a59e693b9ec460e, type: 2}
+    - target: {fileID: 3091503370660430763, guid: 0601dc5fc9857664a84a087164bf00c8,
+        type: 3}
+      propertyPath: m_Parameters.widthMultiplier
+      value: 0.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 3091503371851839233, guid: 0601dc5fc9857664a84a087164bf00c8,
+        type: 3}
+      propertyPath: _handle
+      value: 
+      objectReference: {fileID: 2610853568090141960}
+    - target: {fileID: 3091503371851839233, guid: 0601dc5fc9857664a84a087164bf00c8,
+        type: 3}
+      propertyPath: _positionOffset.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3091503371851839233, guid: 0601dc5fc9857664a84a087164bf00c8,
+        type: 3}
+      propertyPath: _positionOffset.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3091503371851839236, guid: 0601dc5fc9857664a84a087164bf00c8,
         type: 3}
       propertyPath: m_Name
-      value: Paved Route
+      value: Paved Route Variant
       objectReference: {fileID: 0}
     - target: {fileID: 3091503371851839237, guid: 0601dc5fc9857664a84a087164bf00c8,
         type: 3}
@@ -77,5 +97,107 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: d9641da0901417042a59e693b9ec460e, type: 2}
+    - target: {fileID: 3091503371851839239, guid: 0601dc5fc9857664a84a087164bf00c8,
+        type: 3}
+      propertyPath: m_Parameters.widthMultiplier
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3511249242620382259, guid: 0601dc5fc9857664a84a087164bf00c8,
+        type: 3}
+      propertyPath: _priority
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3511249243956827194, guid: 0601dc5fc9857664a84a087164bf00c8,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5962469201448864869, guid: 0601dc5fc9857664a84a087164bf00c8,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -5035579670781140144, guid: c87075f3591e83445b1edb247306c9ad,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0601dc5fc9857664a84a087164bf00c8, type: 3}
+--- !u!4 &2691836950920352445 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3091503371851839237, guid: 0601dc5fc9857664a84a087164bf00c8,
+    type: 3}
+  m_PrefabInstance: {fileID: 1133898433191896504}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7135720362716743652
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2691836950920352445}
+    m_Modifications:
+    - target: {fileID: 4997298741798465705, guid: 0b579c2b35c0861468e6027bc57a69a6,
+        type: 3}
+      propertyPath: m_Name
+      value: Paved Handle
+      objectReference: {fileID: 0}
+    - target: {fileID: 5133178474727617260, guid: 0b579c2b35c0861468e6027bc57a69a6,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5133178474727617260, guid: 0b579c2b35c0861468e6027bc57a69a6,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5133178474727617260, guid: 0b579c2b35c0861468e6027bc57a69a6,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5133178474727617260, guid: 0b579c2b35c0861468e6027bc57a69a6,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5133178474727617260, guid: 0b579c2b35c0861468e6027bc57a69a6,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5133178474727617260, guid: 0b579c2b35c0861468e6027bc57a69a6,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5133178474727617260, guid: 0b579c2b35c0861468e6027bc57a69a6,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5133178474727617260, guid: 0b579c2b35c0861468e6027bc57a69a6,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5133178474727617260, guid: 0b579c2b35c0861468e6027bc57a69a6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5133178474727617260, guid: 0b579c2b35c0861468e6027bc57a69a6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5133178474727617260, guid: 0b579c2b35c0861468e6027bc57a69a6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0b579c2b35c0861468e6027bc57a69a6, type: 3}
+--- !u!4 &2610853568090141960 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5133178474727617260, guid: 0b579c2b35c0861468e6027bc57a69a6,
+    type: 3}
+  m_PrefabInstance: {fileID: 7135720362716743652}
+  m_PrefabAsset: {fileID: 0}

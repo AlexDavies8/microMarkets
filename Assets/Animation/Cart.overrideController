@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Cart
+  m_Controller: {fileID: 9100000, guid: 2233be3d9da73974399e334a2aacd54d, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: -2752864260962967822, guid: e1d16e87a95cb1144afe74b4572e7e00,
+      type: 3}
+    m_OverrideClip: {fileID: -2752864260962967822, guid: 5baee0b07bef9cb428e33256a49a99f0,
+      type: 3}
+  - m_OriginalClip: {fileID: -6487617306719849128, guid: e1d16e87a95cb1144afe74b4572e7e00,
+      type: 3}
+    m_OverrideClip: {fileID: -6487617306719849128, guid: 5baee0b07bef9cb428e33256a49a99f0,
+      type: 3}
+  - m_OriginalClip: {fileID: -5026126706357404130, guid: e1d16e87a95cb1144afe74b4572e7e00,
+      type: 3}
+    m_OverrideClip: {fileID: -5026126706357404130, guid: 5baee0b07bef9cb428e33256a49a99f0,
+      type: 3}
+  - m_OriginalClip: {fileID: 5005111840654028519, guid: e1d16e87a95cb1144afe74b4572e7e00,
+      type: 3}
+    m_OverrideClip: {fileID: 4364229372927167422, guid: 5baee0b07bef9cb428e33256a49a99f0,
+      type: 3}
+  - m_OriginalClip: {fileID: -6580304336725577757, guid: e1d16e87a95cb1144afe74b4572e7e00,
+      type: 3}
+    m_OverrideClip: {fileID: -6487617306719849128, guid: 5baee0b07bef9cb428e33256a49a99f0,
+      type: 3}
+  - m_OriginalClip: {fileID: 710649720222469099, guid: e1d16e87a95cb1144afe74b4572e7e00,
+      type: 3}
+    m_OverrideClip: {fileID: -2752864260962967822, guid: 5baee0b07bef9cb428e33256a49a99f0,
+      type: 3}
+  - m_OriginalClip: {fileID: 4364229372927167422, guid: e1d16e87a95cb1144afe74b4572e7e00,
+      type: 3}
+    m_OverrideClip: {fileID: 4364229372927167422, guid: 5baee0b07bef9cb428e33256a49a99f0,
+      type: 3}
+  - m_OriginalClip: {fileID: -8042419523446497285, guid: e1d16e87a95cb1144afe74b4572e7e00,
+      type: 3}
+    m_OverrideClip: {fileID: -5026126706357404130, guid: 5baee0b07bef9cb428e33256a49a99f0,
+      type: 3}
