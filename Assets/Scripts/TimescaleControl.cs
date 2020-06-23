@@ -13,7 +13,7 @@ public class TimescaleControl : MonoBehaviour
     [SerializeField] private Sprite _hoverSprite = null;
     [SerializeField] private Sprite _selectSprite = null;
 
-    bool _selected;
+    [SerializeField] private bool _selected = false;
 
     public void Select()
     {

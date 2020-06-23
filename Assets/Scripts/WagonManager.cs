@@ -50,7 +50,25 @@ public class WagonManager : MonoBehaviour
         }
         wagon.Route = route;
         wagon.GameManager = _gameManager;
-        wagonGO.GetComponent<SpriteEventTrigger>().OnMouseDown.AddListener(pos => { if (PlacingCart) CreateCart(wagon); });
+        wagonGO.GetComponent<SpriteEventTrigger>().OnMouseDown.AddListener(pos => 
+        { 
+            if (PlacingCart) CreateCart(wagon); 
+            else
+            {
+                _wagons.Remove(wagon);
+                foreach (var cart in wagon.Carts)
+                {
+                    Destroy(cart.gameObject);
+                    Destroy(cart);
+
+                    _gameManager.Carts++;
+                }
+                Destroy(wagon.gameObject);
+                Destroy(wagon);
+
+                _gameManager.Wagons++;
+            }
+        });
         _wagons.Add(wagon);
     }
 

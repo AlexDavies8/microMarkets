@@ -12,6 +12,8 @@ public class Market : MonoBehaviour
 
     [SerializeField] private Resource _type = 0;
     [SerializeField] private Sprite[] _resourceSprites = new Sprite[4];
+    [SerializeField] private GameObject _warning = null;
+    [SerializeField] private AudioClip _warningClip = null;
 
     public MarketController _marketController { get; set; }
     public Resource Type => _type;
@@ -37,11 +39,18 @@ public class Market : MonoBehaviour
 
             if (_overflowTimer <= 0)
             {
-                FindObjectOfType<GameManager>().Lose(); // TODO : FIX LAZYNESS
+                FindObjectOfType<GameManager>().GameOver(); // TODO : FIX LAZYNESS
+            }
+
+            if (!_warning.activeSelf)
+            {
+                _warning.SetActive(true);
+                GetComponent<AudioSource>().PlayOneShot(_warningClip); // TODO : FIX LAZYNESS
             }
         }
         else
         {
+            _warning.SetActive(false);
             _overflowTimer = OverflowTime;
         }
 

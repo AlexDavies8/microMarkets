@@ -8,6 +8,7 @@ public class EventManager : MonoBehaviour
     [SerializeField] private float _eventIntervalRandomness = 10f;
 
     [SerializeField] private GameManager _gameManager = null;
+    [SerializeField] private TimeController _timeController = null;
 
     [SerializeField] private GameObject _eventPrefab = null;
 
@@ -31,7 +32,7 @@ public class EventManager : MonoBehaviour
 
     void ResetEventTimer()
     {
-        _eventInterval = _eventInterval + Random.Range(-_eventIntervalRandomness, _eventIntervalRandomness);
+        _eventTimer = _eventInterval + Random.Range(-_eventIntervalRandomness, _eventIntervalRandomness);
     }
 
     void ShowEvent()
@@ -39,5 +40,6 @@ public class EventManager : MonoBehaviour
         var eventGO = Instantiate(_eventPrefab, _eventPrefab.transform.position, Quaternion.identity, transform);
         var eventui = eventGO.GetComponent<EventUI>();
         eventui.GameManager = _gameManager;
+        eventui.TimeController = _timeController;
     }
 }
