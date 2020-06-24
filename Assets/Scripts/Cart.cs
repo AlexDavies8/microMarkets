@@ -6,6 +6,8 @@ public class Cart : MonoBehaviour
 {
     [SerializeField] private Animator _animator = null;
     public Animator Animator => _animator;
+    [SerializeField] private SpriteRenderer _spriteRenderer = null;
+    public SpriteRenderer SpriteRenderer => _spriteRenderer;
 
     int x, y;
 

@@ -111,6 +111,8 @@ MonoBehaviour:
   - {fileID: 7616711153819495923, guid: 039b68157f91e794f9749e155e777945, type: 3}
   - {fileID: -9034177534490309204, guid: 039b68157f91e794f9749e155e777945, type: 3}
   - {fileID: -6185345479313349119, guid: 039b68157f91e794f9749e155e777945, type: 3}
+  _spriteRenderer: {fileID: 8742889074649519041}
+  _removeColour: {r: 1, g: 1, b: 1, a: 0.69803923}
   x: 0
   y: 0
   _direction: 1

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
@@ -11,6 +12,8 @@ public class Wagon : MonoBehaviour
     [SerializeField] private Vector2 _cartOffset = Vector2.zero;
     [SerializeField] private float _loadSpeed = 3f;
     [SerializeField] private Sprite[] _resourceSprites = new Sprite[4];
+    [SerializeField] private SpriteRenderer _spriteRenderer = null;
+    [SerializeField] private Color _removeColour = Color.white;
 
     public Animator Animator => _animator;
     public float Speed => _speed;
@@ -21,14 +24,21 @@ public class Wagon : MonoBehaviour
     public int NextPointIndex { get; set; } = 0;
     public Market CurrentMarket { get; set; }
     public GameManager GameManager { get; set; }
+    public int RemoveCounter { get; set; } = 0;
 
-    public float x, y;
+    [HideInInspector] public float x, y;
 
     List<SpriteRenderer> _resourceRenderers = new List<SpriteRenderer>();
 
     [HideInInspector] public int _direction = 1;
 
+    public bool RouteIsLoop { get; set; }
+    public List<Vector2> RoutePositions { get; set; } = new List<Vector2>();
+    public List<Market> RouteMarkets { get; set; } = new List<Market>();
+
     StateMachine _stateMachine;
+    bool _removeWhenEmpty;
+    Action _onRemove;
 
     private void Awake()
     {
@@ -40,14 +50,31 @@ public class Wagon : MonoBehaviour
 
         _stateMachine.AddTransition(moveToMarketState, unloadState, () => CurrentMarket != null);
         _stateMachine.AddTransition(unloadState, loadState, () => !Resources.Contains(CurrentMarket.Type));
-        _stateMachine.AddTransition(loadState, moveToMarketState, () => CurrentMarket.Queue.Count == 0 || Resources.Count >= 6 * (Carts.Count + 1));
+        _stateMachine.AddTransition(loadState, moveToMarketState, () => CurrentMarket.Queue.Count == 0 || Resources.Count >= 6 * (Carts.Count + 1) || _removeWhenEmpty);
 
         _stateMachine.SetState(moveToMarketState);
     }
 
     public void Tick(float deltaTime)
     {
+        if (Route != null)
+        {
+            RoutePositions.Clear();
+            RoutePositions.AddRange(Route.RoutePositions);
+
+            RouteMarkets.Clear();
+            RouteMarkets.AddRange(Route.Markets);
+
+            RouteIsLoop = Route.IsLoop;
+        }
+        else if (!_removeWhenEmpty)
+        {
+            RemoveWagon(null);
+        }
+
         _stateMachine.Tick();
+
+        if (_removeWhenEmpty && (Resources.Count == 0 || RemoveCounter >= RouteMarkets.Count)) Remove();
     }
 
     public void MoveCarts()
@@ -70,8 +97,8 @@ public class Wagon : MonoBehaviour
         {
             index = GetNextIndex(index, ref direction);
 
-            float distanceToNext = Vector2.Distance(position, Route.RoutePositions[index]);
-            position = Vector2.MoveTowards(position, Route.RoutePositions[index], distance);
+            float distanceToNext = Vector2.Distance(position, RoutePositions[index]);
+            position = Vector2.MoveTowards(position, RoutePositions[index], distance);
             distance -= distanceToNext;
 
             iterLimit++;
@@ -84,17 +111,17 @@ public class Wagon : MonoBehaviour
     {
         index += direction;
 
-        if (Route.IsLoop)
+        if (RouteIsLoop)
         {
-            if (index >= Route.RoutePositions.Count) index = 0;
-            else if (index < 0) index = Route.RoutePositions.Count - 1;
+            if (index >= RoutePositions.Count) index = 0;
+            else if (index < 0) index = RoutePositions.Count - 1;
         }
         else
         {
-            if (index >= Route.RoutePositions.Count)
+            if (index >= RoutePositions.Count)
             {
                 direction = -1;
-                index = Route.RoutePositions.Count - 2;
+                index = RoutePositions.Count - 2;
             }
             else if (index < 0)
             {
@@ -186,5 +213,42 @@ public class Wagon : MonoBehaviour
             resource.transform.localPosition = new Vector2((index % 3) * 2, (index / 3) * 2 - (index % 3) * 2) / 16f;
             resource.sortingOrder = 10 - index / 3;
         }
+    }
+
+    public void RemoveWagon(Action onRemove)
+    {
+        _onRemove = onRemove;
+
+        if (Resources.Count == 0)
+        {
+            Remove();
+        }
+        else
+        {
+            _removeWhenEmpty = true;
+            RemoveCounter = 0;
+            _spriteRenderer.color = _removeColour;
+            foreach (var resource in _resourceRenderers)
+                resource.color = _removeColour;
+            foreach (var cart in Carts)
+                cart.SpriteRenderer.color = _removeColour;
+        }
+    }
+
+    void Remove()
+    {
+        _onRemove?.Invoke();
+
+        foreach (var cart in Carts)
+        {
+            Destroy(cart.gameObject);
+            Destroy(cart);
+
+            GameManager.Carts++;
+        }
+        Destroy(gameObject);
+        Destroy(this);
+
+        GameManager.Wagons++;
     }
 }

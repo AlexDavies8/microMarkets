@@ -13,10 +13,21 @@ public class WagonManager : MonoBehaviour
 
     List<Wagon> _wagons = new List<Wagon>();
 
+    List<Wagon> _wagonsToRemove = new List<Wagon>();
+
     private void Update()
     {
         foreach (var wagon in _wagons)
-            wagon.Tick(TimeController.DeltaTime);
+        {
+            if (wagon == null) _wagonsToRemove.Add(wagon);
+            else wagon.Tick(TimeController.DeltaTime);
+        }
+
+        foreach (var wagon in _wagonsToRemove)
+        {
+            _wagons.Remove(wagon);
+        }
+        _wagonsToRemove.Clear();
     }
 
     public void BeginPlaceWagon()
@@ -35,7 +46,7 @@ public class WagonManager : MonoBehaviour
         _gameManager.Wagons--;
         var wagonGO = Instantiate(_wagonPrefab);
         var wagonTransform = wagonGO.transform;
-        wagonTransform.SetParent(route.transform);
+        wagonTransform.SetParent(transform);
         var wagon = wagonGO.GetComponent<Wagon>();
         float minDist = float.MaxValue;
         for (int i = 0; i < route.RoutePositions.Count; i++)
@@ -55,18 +66,10 @@ public class WagonManager : MonoBehaviour
             if (PlacingCart) CreateCart(wagon); 
             else
             {
-                _wagons.Remove(wagon);
-                foreach (var cart in wagon.Carts)
+                wagon.RemoveWagon(() =>
                 {
-                    Destroy(cart.gameObject);
-                    Destroy(cart);
-
-                    _gameManager.Carts++;
-                }
-                Destroy(wagon.gameObject);
-                Destroy(wagon);
-
-                _gameManager.Wagons++;
+                    _wagonsToRemove.Add(wagon);
+                });
             }
         });
         _wagons.Add(wagon);

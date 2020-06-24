@@ -30,9 +30,9 @@ public class RouteManager : MonoBehaviour
         if (Input.GetMouseButtonUp(0) && _selectedRoute)
         {
             _selectedRoute.Dragging = false;
-            _selectedRoute.DragPosition = _selectedRoute.Markets[_selectedRoute.Markets.Count - 1].transform.position;
+            _selectedRoute.DragPosition = _selectedRoute.MarketsBuffer[_selectedRoute.MarketsBuffer.Count - 1].transform.position;
             _selectedRoute.RebuildRoutePositions();
-            if (_selectedRoute.Markets.Count < 2)
+            if (_selectedRoute.GetMarketCount() < 2)
             {
                 PrefabsUsed[SelectedRoutePrefab] = false;
                 Routes.Remove(_selectedRoute);
@@ -53,9 +53,26 @@ public class RouteManager : MonoBehaviour
         var routeTransform = routeGO.transform;
         routeTransform.SetParent(transform);
         var route = routeGO.GetComponent<Route>();
-        route.Markets.Add(startMarket);
+        route.AddMarket(startMarket);
         route.GetComponent<SpriteEventTrigger>().OnMouseDown.AddListener(mousePosition => _wagonManager.CreateWagon(mousePosition, route));
-        route.Handle.GetComponent<SpriteEventTrigger>().OnMouseDown.AddListener(mousePosition => { _selectedRoute = route; route.Dragging = true; SelectedRoutePrefab = cachedPrefabIndex; });
+        var handleTrigger = route.Handle.GetComponent<SpriteEventTrigger>();
+        handleTrigger.OnMouseDown.AddListener(mousePosition => 
+        { 
+            _selectedRoute = route;
+            route.Dragging = true;
+            SelectedRoutePrefab = cachedPrefabIndex;
+            foreach (var r in Routes)
+            {
+                r.DisableCollision();
+            }
+        });
+        handleTrigger.OnMouseUp.AddListener(mousePosition =>
+        {
+            if (route.HasCollision)
+            {
+                BeginPlaceWagon();
+            }
+        });
         Routes.Add(route);
         _selectedRoute = route;
         _selectedRoute.Dragging = true;
@@ -70,14 +87,15 @@ public class RouteManager : MonoBehaviour
     {
         if (!_selectedRoute) return;
 
-        if (market == _selectedRoute.Markets[_selectedRoute.Markets.Count-1] && _selectedRoute.Markets.Count > 1) _selectedRoute.Markets.RemoveAt(_selectedRoute.Markets.Count-1);
-        else if ((!_selectedRoute.Markets.Contains(market) || (_selectedRoute.Markets[0] == market && _selectedRoute.Markets.Count > 2)) && !_selectedRoute.IsLoop) _selectedRoute.Markets.Insert(_selectedRoute.Markets.Count, market);
+        if (market == _selectedRoute.MarketsBuffer[_selectedRoute.MarketsBuffer.Count-1] && _selectedRoute.MarketsBuffer.Count > 1) _selectedRoute.RemoveLastMarket();
+        else if ((!_selectedRoute.MarketsBuffer.Contains(market) || (_selectedRoute.MarketsBuffer[0] == market && _selectedRoute.MarketsBuffer.Count > 2)) && !_selectedRoute._isLoop) _selectedRoute.AddMarket(market);
     }
 
     public void BeginPlaceWagon()
     {
         foreach (var route in Routes)
         {
+            route.HasCollision = true;
             route.EnableCollision();
         }
     }
@@ -86,6 +104,7 @@ public class RouteManager : MonoBehaviour
     {
         foreach (var route in Routes)
         {
+            route.HasCollision = false;
             route.DisableCollision();
         }
     }

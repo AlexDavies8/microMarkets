@@ -23,14 +23,14 @@ public class MoveToMarketState : IState
     {
         MoveWagon(TimeController.DeltaTime);
 
-        if (_wagon.Route.Markets.Count > 1) _wagon.MoveCarts();
+        if (_wagon.RouteMarkets.Count > 1) _wagon.MoveCarts();
 
         _wagon.UpdateResourceRenderers();
     }
 
     void MoveWagon(float deltaTime)
     {
-        var nextPoint = _wagon.Route.RoutePositions[_wagon.NextPointIndex];
+        var nextPoint = _wagon.RoutePositions[_wagon.NextPointIndex];
 
         Vector2 diff = (nextPoint - (Vector2)_wagon.transform.position).normalized;
         _wagon.Animator.SetFloat("x", diff.x);
@@ -44,7 +44,7 @@ public class MoveToMarketState : IState
         if ((Vector2)_wagon.transform.position == nextPoint)
         {
             if (_wagon.NextPointIndex % 2 == 0) // Market 
-                ArriveAtMarket(_wagon.Route.Markets[_wagon.NextPointIndex / 2]);
+                ArriveAtMarket(_wagon.RouteMarkets[_wagon.NextPointIndex / 2]);
             _wagon.NextPointIndex = _wagon.GetNextIndex(_wagon.NextPointIndex, ref _wagon._direction);
         }
     }
@@ -55,5 +55,7 @@ public class MoveToMarketState : IState
         {
             _wagon.CurrentMarket = market;
         }
+
+        _wagon.RemoveCounter++;
     }
 }
